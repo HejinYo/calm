@@ -7,6 +7,26 @@ spring:
   application:
     # 应用名称
     name: calm-provider
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # jdbc_config   datasource
+    url: jdbc:mysql://127.0.0.1:3306/jelly?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: redhat
+    # Hikari will use the above plus the following to setup connection pooling
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari.minimum-idle: 5
+    hikari.maximum-pool-size: 15
+    hikari.auto-commit: true
+    hikari.idle-timeout: 30000
+    hikari.pool-name: DatebookHikariCP
+    hikari.max-lifetime: 1800000
+    hikari.connection-timeout: 30000
+    hikari.connection-test-query: SELECT 1
+  jpa:
+    show-sql: true
+    hibernate:
+     ddl-auto: update
 
 eureka:
   client:
@@ -31,3 +51,6 @@ info:
   app:
     name: calm-provider
     version: 1.0
+    
+    
+    
