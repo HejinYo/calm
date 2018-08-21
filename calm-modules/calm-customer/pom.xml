@@ -13,9 +13,9 @@
     <description>服务消费者</description>
 
     <parent>
-        <groupId>cn.hejinyo</groupId>
-        <artifactId>calm</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>cn.hejinyo.calm</groupId>
+        <artifactId>calm-modules</artifactId>
+        <version>${calm.version}</version>
     </parent>
 
     <dependencies>

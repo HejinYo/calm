@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.hejinyo.calm</groupId>
-    <artifactId>calm-euraka</artifactId>
+    <artifactId>calm-common</artifactId>
     <version>${calm.version}</version>
     <packaging>jar</packaging>
 
-    <name>calm-euraka</name>
-    <description>calm euraka 服务注册中心</description>
+    <name>calm-common</name>
+    <description>calm-common 公共库</description>
 
     <parent>
         <groupId>cn.hejinyo</groupId>
@@ -18,19 +18,11 @@
     </parent>
 
     <dependencies>
-
-        <!--eureka服务-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.1.4</version>
         </dependency>
-
-        <!-- eureka Basic认证登录需要 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -44,6 +36,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

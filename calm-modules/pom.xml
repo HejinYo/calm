@@ -5,16 +5,16 @@
 
     <groupId>cn.hejinyo.calm</groupId>
     <artifactId>calm-modules</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${calm.version}</version>
     <packaging>pom</packaging>
 
     <name>calm-modules</name>
     <description>calm 业务模块</description>
 
     <parent>
-        <artifactId>calm</artifactId>
         <groupId>cn.hejinyo</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>calm</artifactId>
+        <version>${calm.version}</version>
     </parent>
 
     <modules>

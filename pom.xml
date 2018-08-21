@@ -6,14 +6,15 @@
 
     <groupId>cn.hejinyo</groupId>
     <artifactId>calm</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${calm.version}</version>
+    <packaging>pom</packaging>
+
     <modules>
         <module>calm-config</module>
         <module>calm-eureka</module>
         <module>calm-gateway</module>
         <module>calm-modules</module>
     </modules>
-    <packaging>pom</packaging>
 
     <name>calm</name>
     <description>calm for Spring Boot</description>
@@ -30,6 +31,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+        <calm.version>1.0</calm.version>
     </properties>
 
     <dependencyManagement>
