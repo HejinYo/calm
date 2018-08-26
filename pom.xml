@@ -13,6 +13,7 @@
         <module>calm-config</module>
         <module>calm-eureka</module>
         <module>calm-gateway</module>
+        <module>calm-auth</module>
         <module>calm-modules</module>
     </modules>
 
