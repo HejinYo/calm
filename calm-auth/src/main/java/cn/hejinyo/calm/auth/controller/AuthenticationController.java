@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * 登录页面控制器
+ *
  * @author : HejinYo   hejinyo@gmail.com
  * @date :  2018/8/26 20:26
  */
@@ -20,4 +22,5 @@ public class AuthenticationController {
     public ModelAndView loginPage() {
         return new ModelAndView("login");
     }
+
 }

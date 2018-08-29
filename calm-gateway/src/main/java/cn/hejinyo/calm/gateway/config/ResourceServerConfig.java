@@ -1,19 +1,30 @@
-package cn.hejinyo.calm.auth.config;
+package cn.hejinyo.calm.gateway.config;
 
+import cn.hejinyo.calm.gateway.handler.AccessDeniedHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
- * order是SecurityProperties.ACCESS_OVERRIDE_ORDER - 1
+ * https://projects.spring.io/spring-security-oauth/docs/oauth2.html
  *
  * @author : HejinYo   hejinyo@gmail.com
- * @date :  2018/8/26 23:52
+ * @date :  2018/8/28 22:32
  */
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
+
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) {
+        resources.accessDeniedHandler(accessDeniedHandler);
+    }
 
     /**
      * 要正常运行，需要反注释掉这段，具体原因见下面分析
@@ -26,6 +37,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.requestMatchers().antMatchers("/res/**")
                 .and()
                 .authorizeRequests()
+                .antMatchers("/res/open/**").permitAll()
                 .antMatchers("/res/**").authenticated();
     }
 

@@ -1,19 +1,11 @@
 package cn.hejinyo.calm.auth.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * security基本配置
@@ -26,15 +18,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @author : HejinYo   hejinyo@gmail.com
  * @date :  2018/8/26 18:59
  */
-@Order(2147483639)
 @Configuration
 @EnableWebSecurity
 public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
-    @Autowired
-    private AuthenticationFailureHandler myAuthenticationFailHander;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,29 +57,6 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .csrf().disable();
-    }
-
-
-    /**
-     * 配置内存模式的用户
-     *
-     * @return
-     */
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("user_1").password("123456").authorities("USER").build());
-        manager.createUser(User.withUsername("user_2").password("123456").authorities("USER").build());
-        return manager;
-    }
-
-    /**
-     * 5.0后就要加个PasswordEncoder了
-     */
-    @Bean
-    public static NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
     /**

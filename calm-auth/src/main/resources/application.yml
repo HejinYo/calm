@@ -5,12 +5,16 @@ spring:
     mode: LEGACYHTML5
   resources: # 指定静态资源的路径
       static-locations: classpath:/static/,classpath:/templates/
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/oauth?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: redhat
 
 server:
   port: 8100
   servlet:
     path: /
-
 
 eureka:
   client:

@@ -1,4 +1,4 @@
-package cn.hejinyo.calm.auth.resource;
+package cn.hejinyo.calm.gateway.resource;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
