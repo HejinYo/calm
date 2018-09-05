@@ -27,9 +27,12 @@ spring:
 shiro:
   anon:
     path:
+      # 静态资源
+      - /css/**
+      - /img/**
       # spring cloud 健康检查
       - /actuator/**
       # oauth登录页面
-      - /
+      - /login
       # jelly 登录
       - /jelly/login/**

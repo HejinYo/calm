@@ -62,7 +62,7 @@ public class JellyShiroConfig extends CalmShiroConfig {
         // 拦截器链
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterAnonConfig().getPath().forEach(path -> {
-            log.info("auth 不拦截路径 => {}", path);
+            log.info("jelly 不拦截路径 => {}", path);
             filterMap.put(path, "anon");
         });
         // 不拦截内部服务调用
