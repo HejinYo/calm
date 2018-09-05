@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.hejinyo.calm.modules</groupId>
+    <artifactId>calm-jelly</artifactId>
+    <version>${calm.version}</version>
+    <packaging>jar</packaging>
+
+    <name>calm-jelly</name>
+    <description>jelly 管理平台</description>
+
+    <parent>
+        <groupId>cn.hejinyo.calm</groupId>
+        <artifactId>calm-modules</artifactId>
+        <version>${calm.version}</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-web</artifactId>
+            <version>${calm.version}</version>
+        </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <!-- HikariCP 连接池 -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+
+        <!-- mysql 驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

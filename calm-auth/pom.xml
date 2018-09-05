@@ -19,15 +19,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.hejinyo.calm</groupId>
-            <artifactId>calm-common</artifactId>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-web</artifactId>
             <version>${calm.version}</version>
         </dependency>
 
-        <!-- oauth2 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>${calm.version}</version>
+        </dependency>
+
+        <!--springMVC-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- thymeleaf -->
@@ -40,11 +46,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
         <!-- 声明式服务调用  -->

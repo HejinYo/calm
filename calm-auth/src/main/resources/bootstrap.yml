@@ -1,0 +1,24 @@
+info:
+  app:
+    name: calm-auth
+    version: 1.0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://hejinyo:password@localhost:8001/eureka/
+    # 缓存清单每隔30秒跟新一次
+    registry-fetch-interval-seconds: 30
+  instance:
+    # 实例使用ip进行访问
+    prefer-ip-address: true
+    # 实例显示id
+    instance-id: ${spring.application.name}:${server.port}
+    #状态页面和健康指标
+    statusPageUrlPath: ${server.servlet.path}/actuator/info
+    healthCheckUrlPath: ${server.servlet.path}/actuator/health
+
+# Feign 开启 Hystrix
+feign:
+  hystrix:
+    enabled: true
