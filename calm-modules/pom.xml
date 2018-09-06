@@ -20,6 +20,7 @@
     <modules>
         <module>calm-customer</module>
         <module>calm-provider</module>
+        <module>calm-jelly</module>
     </modules>
 
     <dependencies>

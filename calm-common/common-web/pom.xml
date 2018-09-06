@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.hejinyo.calm.modules</groupId>
-    <artifactId>calm-customer</artifactId>
+    <groupId>cn.hejinyo.calm.common</groupId>
+    <artifactId>common-web</artifactId>
     <version>${calm.version}</version>
     <packaging>jar</packaging>
 
-    <name>calm-customer</name>
-    <description>服务消费者</description>
+    <name>common-web</name>
+    <description>calm-common 公共库 web</description>
 
     <parent>
         <groupId>cn.hejinyo.calm</groupId>
-        <artifactId>calm-modules</artifactId>
+        <artifactId>calm-common</artifactId>
         <version>${calm.version}</version>
     </parent>
 
     <dependencies>
         <dependency>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-basis</artifactId>
+            <version>${calm.version}</version>
+        </dependency>
+
+        <!-- spring-web -->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- 客户端负载均衡 -->
+        <!-- shiro-spring -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.4.0</version>
         </dependency>
 
-        <!-- hystrix 仪表盘 -->
+        <!-- spring-aop -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
-            <version>1.4.5.RELEASE</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
     </dependencies>
