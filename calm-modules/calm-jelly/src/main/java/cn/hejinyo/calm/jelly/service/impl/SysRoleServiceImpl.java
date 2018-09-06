@@ -1,0 +1,157 @@
+package cn.hejinyo.calm.jelly.service.impl;
+
+import cn.hejinyo.calm.common.basis.base.BaseServiceImpl;
+import cn.hejinyo.calm.common.web.exception.InfoException;
+import cn.hejinyo.calm.common.redis.utils.RedisKeys;
+import cn.hejinyo.calm.common.redis.utils.RedisUtils;
+import cn.hejinyo.calm.jelly.dao.SysRoleDao;
+import cn.hejinyo.calm.jelly.model.SysRoleEntity;
+import cn.hejinyo.calm.jelly.model.SysRolePermissionEntity;
+import cn.hejinyo.calm.jelly.model.SysUserRoleEntity;
+import cn.hejinyo.calm.jelly.service.SysRolePermissionService;
+import cn.hejinyo.calm.jelly.service.SysRoleService;
+import cn.hejinyo.calm.jelly.service.SysUserRoleService;
+import cn.hejinyo.calm.common.web.utils.ShiroUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * 角色管理业务
+ *
+ * @author : HejinYo   hejinyo@gmail.com
+ * @date : 2017/6/17 17:04
+ */
+@Service
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntity, Integer> implements SysRoleService {
+
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
+
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+
+    /**
+     * 角色下拉列表
+     */
+    @Override
+    public List<SysRoleEntity> getDropList() {
+        return baseDao.findDropList();
+    }
+
+    /**
+     * 根据角色Id列表获取角色信息列表
+     */
+    @Override
+    public List<SysRoleEntity> getListByRoleIdList(List<Integer> roleIdList) {
+        return baseDao.findListByRoleIdList(roleIdList);
+    }
+
+    @Override
+    public SysRoleEntity findOne(Integer roleId) {
+        SysRoleEntity sysRole = baseDao.findOne(roleId);
+        if (sysRole != null) {
+            //查询角色拥有的权限
+            SysRolePermissionEntity rolePermission = new SysRolePermissionEntity();
+            rolePermission.setRoleId(roleId);
+            sysRole.setPermIdList(sysRolePermissionService.findList(rolePermission).stream().map(SysRolePermissionEntity::getPermId).collect(Collectors.toList()));
+        }
+        return sysRole;
+    }
+
+    /**
+     * 保存角色
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int save(SysRoleEntity role) {
+        // 从新构建保存对象，控制写入数据
+        SysRoleEntity newRole = new SysRoleEntity();
+        newRole.setRoleCode(role.getRoleCode());
+        newRole.setRoleName(role.getRoleName());
+        newRole.setDescription(role.getDescription());
+        newRole.setState(role.getState());
+        newRole.setSeq(role.getSeq());
+        newRole.setCreateId(ShiroUtils.getUserId());
+        int count = baseDao.save(newRole);
+        if (count > 0) {
+            //保存角色权限关系
+            sysRolePermissionService.save(newRole.getRoleId(), role.getPermIdList());
+            return newRole.getRoleId();
+        }
+        return count;
+    }
+
+    /**
+     * 修改角色
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(Integer roleId, SysRoleEntity role) {
+        // 从新构建保存对象，控制写入数据
+        SysRoleEntity newRole = new SysRoleEntity();
+        newRole.setRoleId(roleId);
+        newRole.setRoleCode(role.getRoleCode());
+        newRole.setRoleName(role.getRoleName());
+        newRole.setDescription(role.getDescription());
+        newRole.setSeq(role.getSeq());
+        newRole.setState(role.getState());
+        newRole.setUpdateId(ShiroUtils.getUserId());
+        //保存角色
+        int roleCount = baseDao.update(newRole);
+        //更新角色与权限关系
+        int permCount = sysRolePermissionService.save(roleId, role.getPermIdList());
+        int count = roleCount + permCount;
+        if (count > 0) {
+            //清空所有用户的权限缓存
+            cleanPermCache();
+        }
+        return count;
+    }
+
+    /**
+     * 删除角色
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteBatch(Integer[] roleIds) {
+        //检测是否有用户在使用此角色
+        for (Integer roleId : roleIds) {
+            SysUserRoleEntity sysUserRole = new SysUserRoleEntity();
+            sysUserRole.setRoleId(roleId);
+            List<SysUserRoleEntity> list = sysUserRoleService.findList(sysUserRole);
+            if (list.size() > 0) {
+                throw new InfoException("角色 [ " + baseDao.findOne(roleId).getRoleName() + " ] 存在使用用户，不能被删除");
+            }
+        }
+
+        //删除角色与权限关系
+        int count = sysRolePermissionService.deleteByRoleIds(roleIds);
+        //删除角色
+        count += baseDao.deleteBatch(roleIds);
+        if (count > 0) {
+            //清空所有用户的权限缓存
+            cleanPermCache();
+        }
+        return count;
+    }
+
+    /**
+     * 清除所有用户的权限缓存
+     */
+    private void cleanPermCache() {
+        Set<String> userStore = redisUtils.keys(RedisKeys.storeUser("*"));
+        userStore.forEach(s -> {
+            redisUtils.hdel(s, RedisKeys.USER_PERM);
+        });
+    }
+
+
+}

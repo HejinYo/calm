@@ -5,7 +5,7 @@
 
     <groupId>cn.hejinyo.calm.common</groupId>
     <artifactId>common-redis</artifactId>
-    <version>${calm.version}</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>common-redis</name>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>cn.hejinyo.calm</groupId>
         <artifactId>calm-common</artifactId>
-        <version>${calm.version}</version>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>cn.hejinyo.calm.common</groupId>
             <artifactId>common-basis</artifactId>
-            <version>${calm.version}</version>
+            <version>1.0</version>
         </dependency>
 
         <!--Redis-->
@@ -35,10 +35,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 

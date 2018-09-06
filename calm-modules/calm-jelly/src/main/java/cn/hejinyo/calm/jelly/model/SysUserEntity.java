@@ -112,8 +112,18 @@ public class SysUserEntity implements Serializable {
     private List<Integer> roleIdList;
 
     /**
+     * 拥有的角色列表
+     */
+    private List<SysRoleEntity> roleList;
+
+    /**
      * 所在的部门ID列表
      */
     private List<Integer> deptIdList;
+
+    /**
+     * 所在的部门列表
+     */
+    private List<SysDeptEntity> deptList;
 
 }

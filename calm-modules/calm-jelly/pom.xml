@@ -5,7 +5,7 @@
 
     <groupId>cn.hejinyo.calm.modules</groupId>
     <artifactId>calm-jelly</artifactId>
-    <version>${calm.version}</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>calm-jelly</name>
@@ -14,14 +14,20 @@
     <parent>
         <groupId>cn.hejinyo.calm</groupId>
         <artifactId>calm-modules</artifactId>
-        <version>${calm.version}</version>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>cn.hejinyo.calm.common</groupId>
             <artifactId>common-web</artifactId>
-            <version>${calm.version}</version>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <!-- mybatis -->
@@ -50,9 +56,85 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Linux可注册为服务 -->
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+
+            <!-- 跳过单元测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                </configuration>
+            </plugin>
+
+            <!-- 指定启动类，只编译源文件，不打包jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib</classpathPrefix>
+                            <mainClass>cn.hejinyo.calm.jelly.CalmJellyApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- copy依赖到lib文件夹 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
-    </build>
 
+        <!-- 解决maven不能打包src下面的*.xml文件 -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <!-- 是否替换资源中的属性-->
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
 
 </project>

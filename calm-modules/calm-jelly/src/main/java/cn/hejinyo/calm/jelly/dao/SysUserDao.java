@@ -13,4 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysUserDao extends BaseDao<SysUserEntity, Integer> {
 
+    int saveUserRole(SysUserEntity sysUser);
+
+    int updateUserRole(SysUserEntity sysUser);
 }

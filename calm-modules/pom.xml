@@ -5,7 +5,7 @@
 
     <groupId>cn.hejinyo.calm</groupId>
     <artifactId>calm-modules</artifactId>
-    <version>${calm.version}</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <name>calm-modules</name>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>cn.hejinyo</groupId>
         <artifactId>calm</artifactId>
-        <version>${calm.version}</version>
+        <version>1.0</version>
     </parent>
 
     <modules>

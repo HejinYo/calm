@@ -6,7 +6,7 @@
 
     <groupId>cn.hejinyo.calm.modules</groupId>
     <artifactId>calm-customer</artifactId>
-    <version>${calm.version}</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>calm-customer</name>
@@ -15,7 +15,7 @@
     <parent>
         <groupId>cn.hejinyo.calm</groupId>
         <artifactId>calm-modules</artifactId>
-        <version>${calm.version}</version>
+        <version>1.0</version>
     </parent>
 
     <dependencies>

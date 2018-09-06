@@ -6,6 +6,7 @@ import cn.hejinyo.calm.common.basis.utils.PageInfo;
 import cn.hejinyo.calm.common.basis.utils.PageQuery;
 import cn.hejinyo.calm.common.basis.utils.Result;
 import cn.hejinyo.calm.common.basis.validator.RestfulValid;
+import cn.hejinyo.calm.common.web.utils.ShiroUtils;
 import cn.hejinyo.calm.jelly.model.SysUserEntity;
 import cn.hejinyo.calm.jelly.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -52,7 +53,7 @@ public class SysUserController {
      */
     @ApiOperation(value = "分页查询用户信息", notes = "支持分页，排序和高级查询")
     @RequestMapping(value = "/listPage", method = {RequestMethod.GET, RequestMethod.POST})
-    @RequiresPermissions("sys:user:view1")
+    @RequiresPermissions("sys:user:view")
     public Result listPage(@RequestParam HashMap<String, Object> pageParam, @RequestBody(required = false) HashMap<String, Object> queryParam) {
         PageInfo<SysUserEntity> userPageInfo = new PageInfo<>(sysUserService.findPage(PageQuery.build(pageParam, queryParam)));
         return Result.ok(userPageInfo);
@@ -72,6 +73,19 @@ public class SysUserController {
             return Result.ok();
         }
         return Result.error(StatusCode.DATABASE_SAVE_FAILURE);
+    }
+
+    /**
+     * 用户名是否已经存在
+     */
+    @ApiOperation(value = "用户名是否已经存在", notes = "用户名是否已经存在")
+    @ApiImplicitParam(paramType = "path", name = "userName", value = "用户名", required = true, dataType = "String")
+    @RequestMapping(value = "/isExistUserName/{userName}", method = RequestMethod.GET)
+    public Result isExistUserName(@PathVariable("userName") String userName) {
+        if (sysUserService.isExistUserName(userName)) {
+            return Result.error("用户名已经存在");
+        }
+        return Result.ok();
     }
 
     /**
@@ -109,4 +123,45 @@ public class SysUserController {
         return Result.error(StatusCode.DATABASE_DELETE_FAILURE);
     }
 
+    /**
+     * 查询个人信息
+     */
+    @GetMapping(value = "/info")
+    public Result getUserInfo() {
+        return Result.ok(sysUserService.findOne(ShiroUtils.getUserId()));
+    }
+
+    /**
+     * 修改密码
+     */
+    @PutMapping(value = "/updatePassword")
+    public Result updatePassword(@RequestBody HashMap<String, Object> param) {
+        int result = sysUserService.updatePassword(param);
+        if (result > 0) {
+            sysUserService.updateUserToken();
+            return Result.ok("密码修改成功");
+        }
+        return Result.error("密码修改失败");
+    }
+
+    /**
+     * 修改用户信息
+     */
+    @PutMapping(value = "/updateUserInfo")
+    public Result updateUserInfo(@RequestBody SysUserEntity sysUser) {
+        int result = sysUserService.updateUserInfo(sysUser);
+        if (result > 0) {
+            sysUserService.updateUserToken();
+            return Result.ok();
+        }
+        return Result.error(StatusCode.DATABASE_UPDATE_FAILURE);
+    }
+
+    /**
+     * 头像上传
+     */
+    @PostMapping(value = "/avatar")
+    public Result avatarUpload(@RequestParam("file") MultipartFile file) {
+        return Result.ok(sysUserService.updateUserAvatar(file));
+    }
 }

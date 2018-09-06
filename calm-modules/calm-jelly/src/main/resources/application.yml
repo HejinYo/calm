@@ -9,6 +9,11 @@ spring:
   application:
     # 应用名称
     name: calm-jelly
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: redhat
+    database: 1
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     # jdbc_config   datasource
@@ -35,7 +40,7 @@ mybatis:
 eureka:
   client:
     service-url:
-      defaultZone: http://hejinyo:password@localhost:8001/eureka
+      defaultZone: http://hejinyo:password@localhost:8000/eureka
     # 缓存清单每隔30秒跟新一次
     registry-fetch-interval-seconds: 30
   instance:

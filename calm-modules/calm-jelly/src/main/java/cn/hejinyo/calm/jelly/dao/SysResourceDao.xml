@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hejinyo.calm.jelly.dao.SysResourceDao">
+
+    <!-- 实体映射 -->
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysResourceEntity">
+        <id column="res_id" jdbcType="INTEGER" property="resId"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="res_name" jdbcType="VARCHAR" property="resName"/>
+        <result column="res_code" jdbcType="VARCHAR" property="resCode"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="seq" jdbcType="TINYINT" property="seq"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <!-- 递归查询用户菜单 -->
+    <resultMap id="RoutersMenuMap" type="cn.hejinyo.calm.jelly.model.dto.RoutersMenuDTO">
+        <id column="res_id" jdbcType="INTEGER" property="resId"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="res_name" jdbcType="VARCHAR" property="title"/>
+        <result column="res_code" jdbcType="VARCHAR" property="name"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+    </resultMap>
+
+    <!-- 表基本列 -->
+    <sql id="Base_Column_List">
+        res_id, parent_id, type, res_name, res_code, icon, seq, state, create_id, create_time,
+        update_id, update_time
+    </sql>
+
+    <!-- 通用查询sql -->
+    <sql id="Base_Where_SQL">
+        <where>
+            <if test="parentId != null and !&quot;&quot;.equals(parentId)">and parent_id = #{parentId}</if>
+            <if test="type != null and !&quot;&quot;.equals(type)">and type = #{type}</if>
+            <if test="resName != null and !&quot;&quot;.equals(resName)">and res_name = #{resName}</if>
+            <if test="resCode != null and !&quot;&quot;.equals(resCode)">and res_code = #{resCode}</if>
+            <if test="icon != null and !&quot;&quot;.equals(icon)">and icon = #{icon}</if>
+            <if test="seq != null and !&quot;&quot;.equals(seq)">and seq = #{seq}</if>
+            <if test="state != null and !&quot;&quot;.equals(state)">and state = #{state}</if>
+            <if test="createId != null and !&quot;&quot;.equals(createId)">and create_id = #{createId}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateId != null and !&quot;&quot;.equals(updateId)">and update_id = #{updateId}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+    </sql>
+
+
+    <!-- 查询所有菜单列表 -->
+    <select id="findAllMenuList" resultMap="RoutersMenuMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from
+        sys_resource sr
+        where sr.state = 0 and sr.type = 1
+        ORDER BY sr.parent_id, sr.seq
+    </select>
+
+    <!-- 查询用户菜单列表 -->
+    <select id="findUserMenuList" resultMap="RoutersMenuMap">
+        select sr.*
+        FROM
+            (
+                select res_id
+                from sys_user_role sur
+                    left JOIN sys_role_permission srp on sur.role_id = srp.role_id
+                    LEFT JOIN sys_permission sp on srp.perm_id = sp.perm_id
+                where sp.state = 0 and user_id = #{userId}
+                GROUP BY res_id
+            ) sp
+            LEFT JOIN
+            sys_resource sr on sr.res_id = sp.res_id
+        where sr.state = 0 and sr.type = 1
+        ORDER BY sr.parent_id, sr.seq
+    </select>
+
+    <!-- 查询所有资源列表 -->
+    <select id="findAllResourceList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_resource sr
+        ORDER BY sr.parent_id, sr.seq
+    </select>
+
+    <!-- 获取系统所有有效资源列表，状态正常 -->
+    <select id="findValidResourceList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_resource sr
+        where sr.state = 0
+        ORDER BY sr.parent_id, sr.seq
+    </select>
+
+    <!-- 修改父节点及其排序号 -->
+    <update id="updateParentIdAndSeq">
+        update sys_resource
+        set parent_id = #{parentId}, seq = #{seq}
+        where res_id = #{resId}
+    </update>
+
+    <!-- 查询父资源所有子资源列表 -->
+    <select id="findListByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource
+        where parent_id = #{parentId}
+        order by seq
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findPage" resultMap="BaseResultMap">
+        select
+        sr.res_id,
+        sr.type,
+        sr.res_code,
+        sr.res_name,
+        sr.parent_id,
+        sp.res_name res_pname,
+        sr.icon,
+        sr.seq,
+        sr.state,
+        sr.create_time,
+        sr.create_id
+        from sys_resource sr
+        LEFT JOIN sys_resource sp on sp.parent_id != sp.res_id AND sr.parent_id = sp.res_id
+        <where>
+            <if test="queryTree != null and !&quot;&quot;.equals(queryTree)">(sr.parent_id = #{queryTree} or sr.res_id = #{queryTree})</if>
+            <if test="resId != null and !&quot;&quot;.equals(resId)">and sr.res_id = #{resId}</if>
+            <if test="resType != null and !&quot;&quot;.equals(resType)">and sr.type like concat('%',#{type},'%')</if>
+            <if test="resCode != null and !&quot;&quot;.equals(resCode)">and sr.res_code like concat('%',#{resCode},'%')</if>
+            <if test="resName != null and !&quot;&quot;.equals(resName)">and sr.res_name like concat('%',#{resName},'%')</if>
+            <if test="resPid != null and !&quot;&quot;.equals(resPid)">and sr.parent_id = #{resPid}</if>
+            <if test="resIcon != null and !&quot;&quot;.equals(resIcon)">and sr.icon like concat('%',#{icon},'%')</if>
+            <if test="seq != null and !&quot;&quot;.equals(seq)">and sr.seq = #{seq}</if>
+            <if test="state != null and !&quot;&quot;.equals(state)">and sr.state = #{state}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and DATE_FORMAT(sr.create_time,'%Y-%m-%d') = STR_TO_DATE(#{createTime},'%Y-%m-%d')</if>
+            <if test="createId != null and !&quot;&quot;.equals(createId)">and sr.create_id = #{createId}</if>
+        </where>
+    </select>
+
+    <!-- 插入一条记录 -->
+    <insert id="save" keyProperty="resId" useGeneratedKeys="true">
+        insert into sys_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != parentId">parent_id,</if>
+            <if test="null != type">type,</if>
+            <if test="null != resName">res_name,</if>
+            <if test="null != resCode">res_code,</if>
+            <if test="null != icon">icon,</if>
+            <if test="null != seq">seq,</if>
+            <if test="null != state">state,</if>
+            <if test="null != createId">create_id,</if>
+            <if test="null != createTime">create_time,</if>
+            <if test="null != updateId">update_id,</if>
+            <if test="null != updateTime">update_time,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != parentId">#{parentId},</if>
+            <if test="null != type">#{type},</if>
+            <if test="null != resName">#{resName},</if>
+            <if test="null != resCode">#{resCode},</if>
+            <if test="null != icon">#{icon},</if>
+            <if test="null != seq">#{seq},</if>
+            <if test="null != state">#{state},</if>
+            <if test="null != createId">#{createId},</if>
+            <if test="null != createTime">#{createTime},</if>
+            <if test="null != updateId">#{updateId},</if>
+            <if test="null != updateTime">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新一条记录 -->
+    <update id="update">
+        update sys_resource
+        <set>
+            <if test="null != parentId">parent_id = #{parentId},</if>
+            <if test="null != type">type = #{type},</if>
+            <if test="null != resName">res_name = #{resName},</if>
+            <if test="null != resCode">res_code = #{resCode},</if>
+            <if test="null != icon">icon = #{icon},</if>
+            <if test="null != seq">seq = #{seq},</if>
+            <if test="null != state">state = #{state},</if>
+            <if test="null != createId">create_id = #{createId},</if>
+            <if test="null != createTime">create_time = #{createTime},</if>
+            <if test="null != updateId">update_id = #{updateId},</if>
+            <if test="null != updateTime">update_time = #{updateTime},</if>
+        </set>
+        where res_id = #{resId}
+    </update>
+
+    <!-- 删除给定主键的记录 -->
+    <delete id="delete">
+        delete
+        from sys_resource
+        where
+            res_id = #{resId}
+    </delete>
+
+    <!-- 修改进入节点所有排序 -->
+    <update id="updateInnerAllSeq">
+        update sys_resource
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="seq = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when res_id =#{item.resId} then #{item.seq}
+                </foreach>
+            </trim>
+        </trim>
+        where res_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item.resId}
+        </foreach>
+    </update>
+
+    <!-- 多个主键批量删除记录 -->
+    <delete id="deleteBatch">
+        delete
+        from sys_resource
+        where
+        res_id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!-- 多个实体批量删除记录 -->
+    <delete id="deleteList">
+        delete
+        from sys_resource
+        where
+        res_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item.resId}
+        </foreach>
+    </delete>
+
+    <!-- 主键查找一条记录 -->
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource
+        where res_id = #{resId}
+    </select>
+
+    <!-- 查询多条 -->
+    <select id="findList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource
+        <include refid="Base_Where_SQL"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <!--<select id="findPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource
+        <where>
+            <if test="parentId != null and !&quot;&quot;.equals(parentId)">and parent_id = #{parentId}</if>
+            <if test="type != null and !&quot;&quot;.equals(type)">and type = #{type}</if>
+            <if test="resName != null and !&quot;&quot;.equals(resName)">and res_name like concat('%',#{resName},'%')</if>
+            <if test="resCode != null and !&quot;&quot;.equals(resCode)">and res_code like concat('%',#{resCode},'%')</if>
+            <if test="icon != null and !&quot;&quot;.equals(icon)">and icon like concat('%',#{icon},'%')</if>
+            <if test="seq != null and !&quot;&quot;.equals(seq)">and seq = #{seq}</if>
+            <if test="state != null and !&quot;&quot;.equals(state)">and state = #{state}</if>
+            <if test="createId != null and !&quot;&quot;.equals(createId)">and create_id = #{createId}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and DATE_FORMAT(create_time,'%Y-%m-%d') = STR_TO_DATE(#{createTime},'%Y-%m-%d')</if>
+            <if test="updateId != null and !&quot;&quot;.equals(updateId)">and update_id = #{updateId}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and DATE_FORMAT(update_time,'%Y-%m-%d') = STR_TO_DATE(#{updateTime},'%Y-%m-%d')</if>
+        </where>
+    </select>-->
+
+    <!-- 查询记录数量 -->
+    <select id="count" resultType="int">
+        select
+        count(*)
+        from sys_resource
+        <include refid="Base_Where_SQL"/>
+    </select>
+
+    <!-- 查询记录是否存在 -->
+    <select id="exsit" resultType="boolean">
+        select
+        count(*)
+        from sys_resource
+        <include refid="Base_Where_SQL"/>
+    </select>
+
+
+</mapper>

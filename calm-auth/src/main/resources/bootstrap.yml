@@ -6,7 +6,7 @@ info:
 eureka:
   client:
     service-url:
-      defaultZone: http://hejinyo:password@localhost:8001/eureka/
+      defaultZone: http://hejinyo:password@localhost:8000/eureka/
     # 缓存清单每隔30秒跟新一次
     registry-fetch-interval-seconds: 30
   instance:
