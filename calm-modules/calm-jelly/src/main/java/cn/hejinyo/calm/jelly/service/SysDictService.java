@@ -2,8 +2,8 @@ package cn.hejinyo.calm.jelly.service;
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
 import cn.hejinyo.calm.common.basis.utils.PageQuery;
-import cn.hejinyo.calm.jelly.model.SysDictEntity;
-import cn.hejinyo.calm.jelly.model.SysDictOptionEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysDictEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysDictOptionEntity;
 import cn.hejinyo.calm.jelly.model.dto.DictDTO;
 
 import java.util.List;

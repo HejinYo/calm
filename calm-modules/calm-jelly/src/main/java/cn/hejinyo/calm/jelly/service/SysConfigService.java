@@ -1,8 +1,8 @@
 package cn.hejinyo.calm.jelly.service;
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
-import cn.hejinyo.calm.jelly.model.SysConfigEntity;
-import cn.hejinyo.calm.jelly.model.SysConfigOptionEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysConfigEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysConfigOptionEntity;
 
 import java.util.List;
 

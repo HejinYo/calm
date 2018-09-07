@@ -2,7 +2,9 @@ package cn.hejinyo.calm.auth.feign.fallback;
 
 import cn.hejinyo.calm.auth.feign.JellyApiService;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
+import cn.hejinyo.calm.common.web.exception.InfoException;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,9 +19,9 @@ import java.util.Set;
 public class JellyApiServiceFallbackImpl implements JellyApiService {
 
     @Override
-    public SysUserDTO findUserByUserName(String username) {
+    public SysUserDTO findByUserName(String username) {
         log.error("调用{}异常:{}", "findUserByUserName", username);
-        return null;
+        throw new InfoException("用户中心查询异常");
     }
 
     /**
@@ -40,4 +42,12 @@ public class JellyApiServiceFallbackImpl implements JellyApiService {
         return new HashSet<>();
     }
 
+    /**
+     * 根据号码查询用户
+     */
+    @Override
+    public SysUserDTO findByPhone(String phone) {
+        log.error("调用 {} 异常 : {}", "根据号码查询用户", phone);
+        return null;
+    }
 }

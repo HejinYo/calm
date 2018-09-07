@@ -1,4 +1,4 @@
-package cn.hejinyo.calm.jelly.model;
+package cn.hejinyo.calm.jelly.model.entity;
 
 import lombok.Data;
 
@@ -6,20 +6,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * sys_role_permission 实体类
+ * sys_user_role 实体类
  *
  * @author : HejinYo   hejinyo@gmail.com
- * @date : 2018/06/14 21:57
+ * @date : 2018/06/14 23:44
  */
 @Data
-public class SysRolePermissionEntity implements Serializable {
+public class SysUserRoleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     /**
-     * 角色资源编号 id
+     * 编号 id
      **/
     private Integer id;
+
+    /**
+     * 用户编号 user_id
+     **/
+    private Integer userId;
 
     /**
      * 角色编号 role_id
@@ -27,12 +31,7 @@ public class SysRolePermissionEntity implements Serializable {
     private Integer roleId;
 
     /**
-     * 权限编号 perm_id
-     **/
-    private Integer permId;
-
-    /**
-     * 创建人编号 create_id
+     * 创建人员 create_id
      **/
     private Integer createId;
 

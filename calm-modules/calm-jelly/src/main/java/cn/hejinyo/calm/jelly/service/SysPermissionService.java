@@ -1,7 +1,7 @@
 package cn.hejinyo.calm.jelly.service;
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
-import cn.hejinyo.calm.jelly.model.SysPermissionEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysPermissionEntity;
 import cn.hejinyo.calm.jelly.model.dto.AuthTreeDTO;
 
 import java.util.List;

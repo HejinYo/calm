@@ -5,7 +5,6 @@ import cn.hejinyo.calm.common.basis.base.BaseServiceImpl;
 import cn.hejinyo.calm.common.basis.consts.Constant;
 import cn.hejinyo.calm.common.basis.consts.StatusCode;
 import cn.hejinyo.calm.common.basis.utils.PageQuery;
-import cn.hejinyo.calm.common.basis.utils.PojoConvertUtil;
 import cn.hejinyo.calm.common.basis.utils.StringUtils;
 import cn.hejinyo.calm.common.redis.utils.RedisKeys;
 import cn.hejinyo.calm.common.redis.utils.RedisUtils;
@@ -13,8 +12,7 @@ import cn.hejinyo.calm.common.web.exception.InfoException;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;
 import cn.hejinyo.calm.common.web.utils.WebUtils;
 import cn.hejinyo.calm.jelly.dao.SysUserDao;
-import cn.hejinyo.calm.jelly.model.SysUserEntity;
-import cn.hejinyo.calm.jelly.model.dto.LoginUserDTO;
+import cn.hejinyo.calm.jelly.model.entity.SysUserEntity;
 import cn.hejinyo.calm.jelly.service.*;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.collections.MapUtils;
@@ -40,8 +38,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
     @Autowired
     private RedisUtils redisUtils;
     @Autowired
-    private ShiroService shiroService;
-    @Autowired
     private SysDeptService sysDeptService;
     @Autowired
     private SysRoleService sysRoleService;
@@ -49,6 +45,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
     private SysUserRoleService sysUserRoleService;
     @Autowired
     private SysUserDeptService sysUserDeptService;
+    @Autowired
+    private JellyLoginService jellyLoginService;
 
     /**
      * 查询一个用户信息
@@ -342,20 +340,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
             }
         }*/
         throw new InfoException("上传失败");
-    }
-
-    /**
-     * 更新用户redis信息
-     */
-    @Override
-    public void updateUserToken() {
-        LoginUserDTO oldUser = PojoConvertUtil.convert(ShiroUtils.getSubject(), LoginUserDTO.class);
-        LoginUserDTO userDTO = shiroService.getLoginUser(oldUser.getUserName());
-        userDTO.setUserToken(oldUser.getUserToken());
-        userDTO.setLoginIp(oldUser.getLoginIp());
-        userDTO.setLoginTime(oldUser.getLoginTime());
-        //token写入缓存
-        redisUtils.hset(RedisKeys.storeUser(userDTO.getUserId()), RedisKeys.USER_TOKEN, userDTO);
     }
 
     /**

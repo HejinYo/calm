@@ -2,7 +2,7 @@ package cn.hejinyo.calm.jelly.service.impl;
 
 import cn.hejinyo.calm.common.basis.base.BaseServiceImpl;
 import cn.hejinyo.calm.jelly.dao.SysLogDao;
-import cn.hejinyo.calm.jelly.model.SysLogEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysLogEntity;
 import cn.hejinyo.calm.jelly.service.SysLogService;
 import org.springframework.stereotype.Service;
 

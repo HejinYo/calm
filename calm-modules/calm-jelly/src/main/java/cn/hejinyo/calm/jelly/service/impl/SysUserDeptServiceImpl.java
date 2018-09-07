@@ -4,7 +4,7 @@ import cn.hejinyo.calm.common.basis.base.BaseServiceImpl;
 import cn.hejinyo.calm.common.redis.utils.RedisKeys;
 import cn.hejinyo.calm.common.redis.utils.RedisUtils;
 import cn.hejinyo.calm.jelly.dao.SysUserDeptDao;
-import cn.hejinyo.calm.jelly.model.SysUserDeptEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserDeptEntity;
 import cn.hejinyo.calm.jelly.service.SysDeptService;
 import cn.hejinyo.calm.jelly.service.SysUserDeptService;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;

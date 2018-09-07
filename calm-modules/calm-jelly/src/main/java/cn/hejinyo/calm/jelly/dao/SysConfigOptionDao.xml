@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.SysConfigOptionDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysConfigOptionEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysConfigOptionEntity">
         <id column="option_id" jdbcType="INTEGER" property="optionId"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="label" jdbcType="VARCHAR" property="label"/>

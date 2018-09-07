@@ -1,6 +1,6 @@
 package cn.hejinyo.calm.jelly.dao;
 
-import cn.hejinyo.calm.jelly.model.SysUserEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Set;
@@ -36,5 +36,7 @@ public interface JellyLoginDao {
      * 查找用户编号对应的权限编码字符串
      */
     Set<String> findUserPermSet(int userId);
+
+    SysUserEntity findByPhone(String userName);
 
 }

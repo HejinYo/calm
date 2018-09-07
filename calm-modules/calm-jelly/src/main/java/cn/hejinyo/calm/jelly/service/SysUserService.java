@@ -1,7 +1,7 @@
 package cn.hejinyo.calm.jelly.service;
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
-import cn.hejinyo.calm.jelly.model.SysUserEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -35,9 +35,4 @@ public interface SysUserService extends BaseService<SysUserEntity, Integer> {
      * 修改头像
      */
     String updateUserAvatar(MultipartFile file);
-
-    /**
-     * 更新用户redis信息
-     */
-    void updateUserToken();
 }

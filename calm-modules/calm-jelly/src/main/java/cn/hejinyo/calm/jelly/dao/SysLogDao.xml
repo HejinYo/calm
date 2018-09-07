@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.SysLogDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysLogEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysLogEntity">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="operation" jdbcType="VARCHAR" property="operation"/>

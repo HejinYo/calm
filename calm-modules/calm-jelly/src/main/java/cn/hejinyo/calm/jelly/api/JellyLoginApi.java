@@ -1,7 +1,8 @@
 package cn.hejinyo.calm.jelly.api;
 
 import cn.hejinyo.calm.common.basis.consts.Constant;
-import cn.hejinyo.calm.jelly.model.SysUserEntity;
+import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
+import cn.hejinyo.calm.common.basis.utils.PojoConvertUtil;
 import cn.hejinyo.calm.jelly.service.JellyLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ import java.util.Set;
 public class JellyLoginApi {
 
     @Autowired
-    private JellyLoginService shiroService;
+    private JellyLoginService jellyLoginService;
 
     /**
      * 根据用户名查询用户信息
      */
     @GetMapping(value = "/findByUserName/{userName}")
-    public SysUserEntity findByUserName(@PathVariable("userName") String userName) {
-        return shiroService.findByUserName(userName);
+    public SysUserDTO findByUserName(@PathVariable("userName") String userName) {
+        return PojoConvertUtil.convert(jellyLoginService.findByUserName(userName), SysUserDTO.class);
     }
 
     /**
@@ -39,7 +40,7 @@ public class JellyLoginApi {
      */
     @GetMapping(value = "/getUserRoleSet/{userId}")
     public Set<String> getUserRoleSet(@PathVariable("userId") int userId) {
-        return shiroService.getUserRoleSet(userId);
+        return jellyLoginService.getUserRoleSet(userId);
     }
 
     /**
@@ -47,6 +48,14 @@ public class JellyLoginApi {
      */
     @GetMapping(value = "/getUserPermSet/{userId}")
     public Set<String> getUserPermSet(@PathVariable("userId") int userId) {
-        return shiroService.getUserPermSet(userId);
+        return jellyLoginService.getUserPermSet(userId);
+    }
+
+    /**
+     * 根据号码查询用户
+     */
+    @GetMapping(value = Constant.SERVER_API + "/login/findByPhone/{phone}")
+    public SysUserDTO findByPhone(@PathVariable("phone") String phone) {
+        return PojoConvertUtil.convert(jellyLoginService.findByPhone(phone), SysUserDTO.class);
     }
 }

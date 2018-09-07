@@ -1,7 +1,7 @@
 package cn.hejinyo.calm.jelly.dao;
 
 import cn.hejinyo.calm.common.basis.base.BaseDao;
-import cn.hejinyo.calm.jelly.model.SysResourceEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysResourceEntity;
 import cn.hejinyo.calm.jelly.model.dto.RoutersMenuDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

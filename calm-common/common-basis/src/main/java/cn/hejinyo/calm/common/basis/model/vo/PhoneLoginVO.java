@@ -1,4 +1,4 @@
-package cn.hejinyo.calm.jelly.model.dto;
+package cn.hejinyo.calm.common.basis.model.vo;
 
 import cn.hejinyo.calm.common.basis.validator.RestfulValid;
 import lombok.Data;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
  * @date : 2018/7/28 16:17
  */
 @Data
-public class PhoneLoginDTO {
+public class PhoneLoginVO {
 
     /**
      * 手机

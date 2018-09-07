@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.SysUserDeptDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysUserDeptEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysUserDeptEntity">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="dept_id" jdbcType="INTEGER" property="deptId"/>

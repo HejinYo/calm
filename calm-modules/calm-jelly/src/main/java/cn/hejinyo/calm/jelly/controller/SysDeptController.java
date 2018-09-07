@@ -6,7 +6,7 @@ import cn.hejinyo.calm.common.basis.utils.PageInfo;
 import cn.hejinyo.calm.common.basis.utils.PageQuery;
 import cn.hejinyo.calm.common.basis.utils.Result;
 import cn.hejinyo.calm.common.basis.validator.RestfulValid;
-import cn.hejinyo.calm.jelly.model.SysDeptEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysDeptEntity;
 import cn.hejinyo.calm.jelly.service.SysDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

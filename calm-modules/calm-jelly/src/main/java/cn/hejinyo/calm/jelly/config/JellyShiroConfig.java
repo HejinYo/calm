@@ -110,22 +110,26 @@ public class JellyShiroConfig extends CalmShiroConfig {
         @Override
         protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
             String userToken = ((HttpServletRequest) request).getHeader(Constant.AUTHOR_PARAM);
-            if (StringUtils.isNotEmpty(userToken)) {
-                String sub = Tools.tokenInfo(userToken, Constant.JWT_SUB, String.class);
-                // 只允许jelly登录用户访问
-                if ("jelly".equals(sub)) {
-                    Integer userId = Tools.tokenInfo(userToken, Constant.JWT_TOKEN_USERID, Integer.class);
-                    String jti = Tools.tokenInfo(userToken, Constant.JWT_ID, String.class);
-                    AuthCheckResult result = authApiService.checkToken(userId, jti);
-                    if (result != null && result.isPass()) {
-                        String userName = Tools.tokenInfo(userToken, Constant.JWT_TOKEN_USERNAME, String.class);
-                        getSubject(request, response).login(new CalmAuthToken(userName, userId, userToken, result.getRoleSet(), result.getPermSet()));
-                        return true;
+            try {
+                if (StringUtils.isNotEmpty(userToken)) {
+                    // 验证token有效性
+                    Tools.verifyToken(userToken, Constant.JWT_SIGN_KEY);
+                    String sub = Tools.tokenInfo(userToken, Constant.JWT_SUB, String.class);
+                    // 只允许jelly登录用户访问
+                    if ("jelly".equals(sub)) {
+                        Integer userId = Tools.tokenInfo(userToken, Constant.JWT_TOKEN_USERID, Integer.class);
+                        String jti = Tools.tokenInfo(userToken, Constant.JWT_ID, String.class);
+                        AuthCheckResult result = authApiService.checkToken(userId, jti);
+                        if (result != null && result.isPass()) {
+                            String userName = Tools.tokenInfo(userToken, Constant.JWT_TOKEN_USERNAME, String.class);
+                            getSubject(request, response).login(new CalmAuthToken(userName, userId, userToken, result.getRoleSet(), result.getPermSet()));
+                            return true;
+                        }
                     }
                 }
+            } catch (Exception e) {
+                log.debug("userToken 验证失败 ：{},{}", userToken, e.getMessage());
             }
-
-            log.debug("userToken 验证失败 ：" + userToken);
             ResponseUtils.response(response, Result.error(StatusCode.TOKEN_FAULT));
             return false;
         }

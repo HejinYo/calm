@@ -12,7 +12,7 @@ import cn.hejinyo.calm.common.redis.utils.RedisUtils;
 import cn.hejinyo.calm.common.web.exception.InfoException;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;
 import cn.hejinyo.calm.jelly.dao.SysDeptDao;
-import cn.hejinyo.calm.jelly.model.SysDeptEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysDeptEntity;
 import cn.hejinyo.calm.jelly.service.SysDeptService;
 import cn.hejinyo.calm.jelly.service.SysUserDeptService;
 import org.springframework.beans.factory.annotation.Autowired;

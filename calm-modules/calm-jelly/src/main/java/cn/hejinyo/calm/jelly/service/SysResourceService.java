@@ -1,7 +1,7 @@
 package cn.hejinyo.calm.jelly.service;
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
-import cn.hejinyo.calm.jelly.model.SysResourceEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysResourceEntity;
 import cn.hejinyo.calm.jelly.model.dto.RoutersMenuDTO;
 
 import java.util.HashMap;

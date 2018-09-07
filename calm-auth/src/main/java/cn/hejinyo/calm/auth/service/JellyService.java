@@ -1,8 +1,8 @@
 package cn.hejinyo.calm.auth.service;
 
+import cn.hejinyo.calm.common.basis.model.vo.PhoneLoginVO;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
 import cn.hejinyo.calm.common.web.shiro.AuthCheckResult;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Set;
 
@@ -36,4 +36,19 @@ public interface JellyService {
      * 验证token 通过返回角色权限信息
      */
     AuthCheckResult checkToken(Integer userId, String jti);
+
+    /**
+     * 注销
+     */
+    void logout(String token);
+
+    /**
+     * 发送电话登录验证码
+     */
+    boolean sendPhoneCode(String phone);
+
+    /**
+     * 手机用户登录
+     */
+    SysUserDTO phoneLogin(PhoneLoginVO phoneLogin);
 }

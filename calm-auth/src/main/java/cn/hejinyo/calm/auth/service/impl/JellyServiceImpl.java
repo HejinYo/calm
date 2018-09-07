@@ -1,11 +1,13 @@
 package cn.hejinyo.calm.auth.service.impl;
 
 import cn.hejinyo.calm.auth.feign.JellyApiService;
+import cn.hejinyo.calm.common.basis.model.vo.PhoneLoginVO;
 import cn.hejinyo.calm.auth.service.JellyService;
 import cn.hejinyo.calm.common.basis.consts.Constant;
 import cn.hejinyo.calm.common.basis.consts.StatusCode;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
-import cn.hejinyo.calm.common.basis.utils.JsonUtil;
+import cn.hejinyo.calm.common.basis.utils.SmsUtils;
+import cn.hejinyo.calm.common.basis.utils.StringUtils;
 import cn.hejinyo.calm.common.basis.utils.Tools;
 import cn.hejinyo.calm.common.redis.utils.RedisKeys;
 import cn.hejinyo.calm.common.redis.utils.RedisUtils;
@@ -13,11 +15,14 @@ import cn.hejinyo.calm.common.web.exception.InfoException;
 import cn.hejinyo.calm.common.web.shiro.AuthCheckResult;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author : HejinYo   hejinyo@gmail.com
@@ -37,7 +42,7 @@ public class JellyServiceImpl implements JellyService {
     @Override
     public SysUserDTO checkUser(SysUserDTO loginUser) {
         // 根据用户名查找用户，进行密码匹配
-        SysUserDTO userDTO = jellyApiService.findUserByUserName(loginUser.getUserName());
+        SysUserDTO userDTO = jellyApiService.findByUserName(loginUser.getUserName());
         // 如果无相关用户或已删除则返回null
         if (null == userDTO) {
             throw new InfoException(StatusCode.LOGIN_USER_NOEXIST);
@@ -118,5 +123,75 @@ public class JellyServiceImpl implements JellyService {
             result.setPermSet(getUserPermSet(userId));
         }
         return result;
+    }
+
+    /**
+     * 注销
+     */
+    @Override
+    public void logout(String token) {
+        try {
+            //验证token是否有效
+            Tools.verifyToken(token, Constant.JWT_SIGN_KEY);
+            //token中获取用户名
+            Integer userId = Tools.tokenInfo(token, Constant.JWT_TOKEN_USERID, Integer.class);
+            String jti = Tools.tokenInfo(token, Constant.JWT_ID, String.class);
+            //查询缓存中的用户信息
+            String checkJti = redisUtils.hget(RedisKeys.storeUser(userId), RedisKeys.USER_TOKEN, String.class);
+            if (jti.equals(checkJti)) {
+                //清除用户原来所有缓存
+                redisUtils.delete(RedisKeys.storeUser(userId));
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+
+    /**
+     * 发送电话登录验证码
+     */
+    @Override
+    public boolean sendPhoneCode(String phone) {
+        // 验证电话号码格式
+        String regEx = "^$|^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(phone);
+        if (!matcher.find()) {
+            throw new InfoException("电话号码格式错误");
+        }
+        String code = String.valueOf(RandomUtils.nextInt(100000, 999999));
+        boolean result = SmsUtils.sendLogin(phone, code);
+        if (result) {
+            redisUtils.setEX(RedisKeys.smsSingle(phone), code, 300);
+        }
+        return result;
+    }
+
+    /**
+     * 手机用户登录
+     */
+    @Override
+    public SysUserDTO phoneLogin(PhoneLoginVO phoneLogin) {
+        String phone = phoneLogin.getPhone();
+        String code = phoneLogin.getCode();
+        // 匹配验证码
+        String localCode = redisUtils.get(RedisKeys.smsSingle(phone), String.class);
+        if (StringUtils.isEmpty(localCode)) {
+            throw new InfoException("验证码过期，请重新获取");
+        }
+        // 删除验证码
+        redisUtils.delete(RedisKeys.smsSingle(phone));
+        if (!code.equals(localCode)) {
+            throw new InfoException("验证码错误");
+        }
+        // 根据号码查询用户
+        SysUserDTO userDTO = jellyApiService.findByPhone(phone);
+        // 如果无相关用户或已删除则返回null
+        if (null == userDTO) {
+            throw new InfoException(StatusCode.LOGIN_USER_NOEXIST);
+        } else if (1 == userDTO.getState()) {
+            throw new InfoException(StatusCode.LOGIN_USER_LOCK);
+        }
+        return userDTO;
     }
 }

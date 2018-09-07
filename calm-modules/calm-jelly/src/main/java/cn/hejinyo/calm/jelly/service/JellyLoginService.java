@@ -1,6 +1,6 @@
 package cn.hejinyo.calm.jelly.service;
 
-import cn.hejinyo.calm.jelly.model.SysUserEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserEntity;
 
 import java.util.Set;
 
@@ -9,6 +9,10 @@ import java.util.Set;
  * @date :  2018/3/20 22:48
  */
 public interface JellyLoginService {
+    /**
+     * 获取登录用户信息
+     */
+    SysUserEntity getUserInfo();
 
     /**
      * 执行登录，查询用户登录信息
@@ -24,4 +28,14 @@ public interface JellyLoginService {
      * 查找用户编号对应的权限编码字符串
      */
     Set<String> getUserPermSet(int userId);
+
+    /**
+     * 手机登录，查询用户登录信息
+     */
+    SysUserEntity findByPhone(String phone);
+
+    /**
+     * 解锁屏幕
+     */
+    boolean unlock(String userPwd);
 }

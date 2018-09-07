@@ -1,7 +1,8 @@
 package cn.hejinyo.calm.common.basis.model.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -35,13 +36,11 @@ public class SysUserDTO implements Serializable {
     /**
      * 用户密码 user_pwd
      **/
-    @JSONField(serialize = false)
     private String userPwd;
 
     /**
      * 用户盐 user_salt
      **/
-    @JSONField(serialize = false)
     private String userSalt;
 
     /**
@@ -67,12 +66,12 @@ public class SysUserDTO implements Serializable {
     /**
      * 最后登录时间 login_time
      **/
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
     /**
      * 用户状态 0：正常；1：禁用； state
      **/
-    @JSONField(serialize = false)
     private Integer state;
 
 }

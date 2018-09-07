@@ -7,7 +7,7 @@ import cn.hejinyo.calm.common.basis.utils.PageQuery;
 import cn.hejinyo.calm.common.basis.utils.Result;
 import cn.hejinyo.calm.common.basis.validator.RestfulValid;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;
-import cn.hejinyo.calm.jelly.model.SysUserEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserEntity;
 import cn.hejinyo.calm.jelly.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -138,7 +138,6 @@ public class SysUserController {
     public Result updatePassword(@RequestBody HashMap<String, Object> param) {
         int result = sysUserService.updatePassword(param);
         if (result > 0) {
-            sysUserService.updateUserToken();
             return Result.ok("密码修改成功");
         }
         return Result.error("密码修改失败");
@@ -151,7 +150,6 @@ public class SysUserController {
     public Result updateUserInfo(@RequestBody SysUserEntity sysUser) {
         int result = sysUserService.updateUserInfo(sysUser);
         if (result > 0) {
-            sysUserService.updateUserToken();
             return Result.ok();
         }
         return Result.error(StatusCode.DATABASE_UPDATE_FAILURE);

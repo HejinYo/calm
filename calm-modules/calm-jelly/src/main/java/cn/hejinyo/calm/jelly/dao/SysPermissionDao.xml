@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.SysPermissionDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysPermissionEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysPermissionEntity">
         <id column="perm_id" jdbcType="INTEGER" property="permId"/>
         <result column="res_id" jdbcType="INTEGER" property="resId"/>
         <result column="perm_name" jdbcType="VARCHAR" property="permName"/>

@@ -2,7 +2,7 @@ package cn.hejinyo.calm.jelly.service.impl;
 
 import cn.hejinyo.calm.common.basis.base.BaseServiceImpl;
 import cn.hejinyo.calm.jelly.dao.SysRolePermissionDao;
-import cn.hejinyo.calm.jelly.model.SysRolePermissionEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysRolePermissionEntity;
 import cn.hejinyo.calm.jelly.service.SysRolePermissionService;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;
 import org.springframework.stereotype.Service;

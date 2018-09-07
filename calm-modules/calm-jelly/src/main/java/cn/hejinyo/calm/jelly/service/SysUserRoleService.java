@@ -1,7 +1,7 @@
 package cn.hejinyo.calm.jelly.service;
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
-import cn.hejinyo.calm.jelly.model.SysUserRoleEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserRoleEntity;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.SysRoleDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysRoleEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysRoleEntity">
         <id column="role_id" jdbcType="INTEGER" property="roleId"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
         <result column="role_name" jdbcType="VARCHAR" property="roleName"/>

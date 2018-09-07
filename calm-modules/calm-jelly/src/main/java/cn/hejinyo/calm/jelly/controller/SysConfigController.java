@@ -2,14 +2,12 @@ package cn.hejinyo.calm.jelly.controller;
 
 import cn.hejinyo.calm.common.basis.annotation.SysLogger;
 import cn.hejinyo.calm.common.basis.validator.RestfulValid;
-import cn.hejinyo.calm.common.basis.annotation.SysLogger;
 import cn.hejinyo.calm.common.basis.consts.StatusCode;
 import cn.hejinyo.calm.common.basis.utils.PageInfo;
 import cn.hejinyo.calm.common.basis.utils.PageQuery;
 import cn.hejinyo.calm.common.basis.utils.Result;
-import cn.hejinyo.calm.common.basis.validator.RestfulValid;
-import cn.hejinyo.calm.jelly.model.SysConfigEntity;
-import cn.hejinyo.calm.jelly.model.SysConfigOptionEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysConfigEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysConfigOptionEntity;
 import cn.hejinyo.calm.jelly.service.SysConfigService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

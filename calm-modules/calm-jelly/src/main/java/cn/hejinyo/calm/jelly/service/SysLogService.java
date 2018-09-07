@@ -2,7 +2,7 @@ package cn.hejinyo.calm.jelly.service;
 
 
 import cn.hejinyo.calm.common.basis.base.BaseService;
-import cn.hejinyo.calm.jelly.model.SysLogEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysLogEntity;
 
 /**
  * @author : HejinYo   hejinyo@gmail.com

@@ -1,4 +1,4 @@
-package cn.hejinyo.calm.jelly.model;
+package cn.hejinyo.calm.jelly.model.entity;
 
 import lombok.Data;
 

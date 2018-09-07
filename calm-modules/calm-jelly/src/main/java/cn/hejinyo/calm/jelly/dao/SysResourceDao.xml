@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.SysResourceDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysResourceEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysResourceEntity">
         <id column="res_id" jdbcType="INTEGER" property="resId"/>
         <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
         <result column="type" jdbcType="TINYINT" property="type"/>

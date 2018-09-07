@@ -3,7 +3,7 @@
 <mapper namespace="cn.hejinyo.calm.jelly.dao.JellyLoginDao">
 
     <!-- 实体映射 -->
-    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.SysUserEntity">
+    <resultMap id="BaseResultMap" type="cn.hejinyo.calm.jelly.model.entity.SysUserEntity">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -67,6 +67,15 @@
             LEFT JOIN sys_role_permission srp on srp.perm_id = sp.perm_id
             LEFT JOIN sys_user_role sur on sur.role_id = srp.role_id
         where sp.state = 0 and sur.user_id = #{userId}
+    </select>
+
+    <!-- 执行登录，根据手机查询用户登录信息 -->
+    <select id="findByPhone" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user
+        WHERE
+        phone = #{phone}
     </select>
 
 

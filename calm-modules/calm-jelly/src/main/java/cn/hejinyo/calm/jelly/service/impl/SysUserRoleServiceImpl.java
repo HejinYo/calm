@@ -3,7 +3,7 @@ package cn.hejinyo.calm.jelly.service.impl;
 import cn.hejinyo.calm.common.basis.base.BaseServiceImpl;
 import cn.hejinyo.calm.common.web.utils.ShiroUtils;
 import cn.hejinyo.calm.jelly.dao.SysUserRoleDao;
-import cn.hejinyo.calm.jelly.model.SysUserRoleEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysUserRoleEntity;
 import cn.hejinyo.calm.jelly.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

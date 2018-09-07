@@ -22,7 +22,7 @@ public interface JellyApiService {
      * 通过用户名查询用户信息
      */
     @GetMapping(Constant.SERVER_API + "/login/findByUserName/{userName}")
-    SysUserDTO findUserByUserName(@PathVariable("userName") String userName);
+    SysUserDTO findByUserName(@PathVariable("userName") String userName);
 
     /**
      * 查找用户编号对应的角色编码字符串
@@ -35,4 +35,10 @@ public interface JellyApiService {
      */
     @GetMapping(value = Constant.SERVER_API + "/login/getUserPermSet/{userId}")
     Set<String> getUserPermSet(@PathVariable("userId") int userId);
+
+    /**
+     * 根据号码查询用户
+     */
+    @GetMapping(value = Constant.SERVER_API + "/login/findByPhone/{phone}")
+    SysUserDTO findByPhone(@PathVariable("phone") String phone);
 }

@@ -1,7 +1,7 @@
 package cn.hejinyo.calm.jelly.dao;
 
 import cn.hejinyo.calm.common.basis.base.BaseDao;
-import cn.hejinyo.calm.jelly.model.SysConfigEntity;
+import cn.hejinyo.calm.jelly.model.entity.SysConfigEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
