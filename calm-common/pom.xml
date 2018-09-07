@@ -21,6 +21,7 @@
         <module>common-basis</module>
         <module>common-web</module>
         <module>common-redis</module>
+        <module>common-generator</module>
     </modules>
 
     <dependencies>
