@@ -1,0 +1,15 @@
+
+# 端口占用
+```text
+calm-euraka : 8000 hejinyo password
+calm-config : 8010
+calm-geteway : 8020
+
+
+calm-auth : 8100
+
+calm-jelly : 8100
+
+
+
+``` 
