@@ -13,10 +13,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@EnableZuulProxy
 @SpringBootApplication
-@ComponentScan(basePackages = {"cn.hejinyo.calm.gateway", "cn.hejinyo.calm.common"})
 @EnableFeignClients
+@EnableZuulProxy
+@ComponentScan(basePackages = {"cn.hejinyo.calm.gateway", "cn.hejinyo.calm.common"})
 public class CalmGatewayApplication {
 
     public static void main(String[] args) {

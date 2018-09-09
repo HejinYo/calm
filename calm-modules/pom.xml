@@ -18,25 +18,13 @@
     </parent>
 
     <modules>
-        <module>calm-customer</module>
-        <module>calm-provider</module>
         <module>calm-jelly</module>
+        <module>calm-oss</module>
+        <module>calm-mail</module>
+        <module>calm-wechat</module>
     </modules>
 
     <dependencies>
-        <!-- 声明式服务调用  -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-            <version>1.4.5.RELEASE</version>
-        </dependency>
-
-        <!--熔断器 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
-            <version>1.4.5.RELEASE</version>
-        </dependency>
     </dependencies>
 
 </project>

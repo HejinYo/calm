@@ -6,6 +6,7 @@ import cn.hejinyo.calm.auth.service.JellyService;
 import cn.hejinyo.calm.common.basis.consts.Constant;
 import cn.hejinyo.calm.common.basis.consts.StatusCode;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
+import cn.hejinyo.calm.common.basis.model.vo.UserNameLoginVO;
 import cn.hejinyo.calm.common.basis.utils.SmsUtils;
 import cn.hejinyo.calm.common.basis.utils.StringUtils;
 import cn.hejinyo.calm.common.basis.utils.Tools;
@@ -40,9 +41,9 @@ public class JellyServiceImpl implements JellyService {
      * 验证登录用户
      */
     @Override
-    public SysUserDTO checkUser(SysUserDTO loginUser) {
+    public SysUserDTO checkUser(UserNameLoginVO nameLoginVO) {
         // 根据用户名查找用户，进行密码匹配
-        SysUserDTO userDTO = jellyApiService.findByUserName(loginUser.getUserName());
+        SysUserDTO userDTO = jellyApiService.findByUserName(nameLoginVO.getUserName());
         // 如果无相关用户或已删除则返回null
         if (null == userDTO) {
             throw new InfoException(StatusCode.LOGIN_USER_NOEXIST);
@@ -50,7 +51,7 @@ public class JellyServiceImpl implements JellyService {
             throw new InfoException(StatusCode.LOGIN_USER_LOCK);
         }
         //验证密码
-        if (!userDTO.getUserPwd().equals(ShiroUtils.userPassword(loginUser.getUserPwd(), userDTO.getUserSalt()))) {
+        if (!userDTO.getUserPwd().equals(ShiroUtils.userPassword(nameLoginVO.getUserPwd(), userDTO.getUserSalt()))) {
             throw new InfoException(StatusCode.LOGIN_PASSWORD_ERROR);
         }
         return userDTO;

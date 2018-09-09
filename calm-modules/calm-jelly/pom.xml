@@ -18,16 +18,44 @@
     </parent>
 
     <dependencies>
+
+        <!-- 服务注册 -->
         <dependency>
-            <groupId>cn.hejinyo.calm.common</groupId>
-            <artifactId>common-web</artifactId>
-            <version>1.0</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!--配置中心-->
         <dependency>
-            <groupId>cn.hejinyo.calm.common</groupId>
-            <artifactId>common-redis</artifactId>
-            <version>1.0</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+        <!-- 声明式服务调用  -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+
+        <!--熔断器 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+
+        <!-- hystrix 仪表盘 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+
+        <!-- rabbitmq -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
         <!-- mybatis -->
@@ -49,6 +77,25 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-web</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hejinyo.calm.common</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- swagger2 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
     </dependencies>
 
     <build>

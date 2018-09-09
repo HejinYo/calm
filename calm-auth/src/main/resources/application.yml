@@ -12,11 +12,6 @@ spring:
     mode: LEGACYHTML5
   resources: # 指定静态资源的路径
       static-locations: classpath:/static/,classpath:/templates/
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/oauth?useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: root
-    password: redhat
   redis:
     host: 127.0.0.1
     port: 6379
@@ -36,3 +31,14 @@ shiro:
       - /login
       # jelly 登录
       - /jelly/login/**
+
+tencent:
+  baseUrl: https://graph.qq.com
+  authorizeURL: ${tencent.baseUrl}/oauth2.0/authorize
+  accessTokenURL: ${tencent.baseUrl}/oauth2.0/token
+  getUserInfoURL: ${tencent.baseUrl}/user/get_user_info
+  getOpenIDURL: ${tencent.baseUrl}/oauth2.0/me
+  clientId: 101494574
+  clientSecret: 22e81b9bb632922b1095d0de329c9a35
+  redirectURI: http://test.hejinyo.cn/api/oauth/v2
+  scope: get_user_info

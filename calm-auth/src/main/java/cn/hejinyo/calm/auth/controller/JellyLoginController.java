@@ -1,10 +1,13 @@
 package cn.hejinyo.calm.auth.controller;
 
+import cn.hejinyo.calm.auth.model.dto.TencentUserDTO;
+import cn.hejinyo.calm.auth.service.TencentOauthService;
 import cn.hejinyo.calm.common.basis.model.vo.PhoneLoginVO;
 import cn.hejinyo.calm.auth.service.JellyService;
 import cn.hejinyo.calm.common.basis.annotation.SysLogger;
 import cn.hejinyo.calm.common.basis.consts.Constant;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
+import cn.hejinyo.calm.common.basis.model.vo.UserNameLoginVO;
 import cn.hejinyo.calm.common.basis.utils.Result;
 import cn.hejinyo.calm.common.basis.utils.StringUtils;
 import cn.hejinyo.calm.common.basis.validator.RestfulValid;
@@ -27,12 +30,16 @@ public class JellyLoginController {
     @Autowired
     private JellyService jellyService;
 
+
+    @Autowired
+    private TencentOauthService tencentOauthService;
+
     /**
      * 执行登录,返回userToken
      */
     @PostMapping(value = "/login")
-    public Result login(@Validated(RestfulValid.POST.class) @RequestBody SysUserDTO loginUser) {
-        return Result.result(jellyService.doLogin(jellyService.checkUser(loginUser)));
+    public Result login(@Validated(RestfulValid.POST.class) @RequestBody UserNameLoginVO userNameLoginVO) {
+        return Result.result(jellyService.doLogin(jellyService.checkUser(userNameLoginVO)));
     }
 
     /**
@@ -65,6 +72,24 @@ public class JellyLoginController {
             return Result.ok();
         }
         return Result.error("验证码发送失败");
+    }
+
+    /**
+     * 登录重定向的url
+     */
+    @GetMapping("/login/qq")
+    public Result loginPage() {
+        return Result.result(tencentOauthService.loginUrl());
+    }
+
+    @GetMapping("/login/qq/check")
+    public Result LoginRedirect(@RequestParam("code") String code, @RequestParam("state") String state) {
+        TencentUserDTO userDTO = tencentOauthService.loginRedirect(code, state);
+        if (userDTO != null) {
+            return Result.ok("登录测试成功", userDTO.getNickname() + ":谢谢你的登录，目前还没结合业务，mua~>");
+        }
+        return Result.ok("登录测试失败");
+
     }
 
 }

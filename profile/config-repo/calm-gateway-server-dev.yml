@@ -1,8 +1,0 @@
-zuul:
-  routes:
-    api-a-url:
-      path: /auth/**
-      serviceId: calm-auth
-    api-b-url:
-      path: /jelly/**
-      serviceId: calm-jelly

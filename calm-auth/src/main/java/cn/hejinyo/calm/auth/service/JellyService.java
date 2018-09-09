@@ -2,6 +2,7 @@ package cn.hejinyo.calm.auth.service;
 
 import cn.hejinyo.calm.common.basis.model.vo.PhoneLoginVO;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
+import cn.hejinyo.calm.common.basis.model.vo.UserNameLoginVO;
 import cn.hejinyo.calm.common.web.shiro.AuthCheckResult;
 
 import java.util.Set;
@@ -15,7 +16,7 @@ public interface JellyService {
     /**
      * 验证登录用户
      */
-    SysUserDTO checkUser(SysUserDTO loginUser);
+    SysUserDTO checkUser(UserNameLoginVO userNameLoginVO);
 
     /**
      * 处理登录逻辑

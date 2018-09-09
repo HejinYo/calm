@@ -55,6 +55,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!--  spring-boot-test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -67,14 +68,6 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.0</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- configuration-processor -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -82,11 +75,12 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- swagger2 -->
+        <!-- lombok -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

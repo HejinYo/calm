@@ -4,7 +4,6 @@ import cn.hejinyo.calm.auth.feign.JellyApiService;
 import cn.hejinyo.calm.common.basis.model.dto.SysUserDTO;
 import cn.hejinyo.calm.common.web.exception.InfoException;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -20,8 +19,8 @@ public class JellyApiServiceFallbackImpl implements JellyApiService {
 
     @Override
     public SysUserDTO findByUserName(String username) {
-        log.error("调用{}异常:{}", "findUserByUserName", username);
-        throw new InfoException("用户中心查询异常");
+        log.error("调用 用户中心查询异常{}异常:{}", "findUserByUserName", username);
+        return null;
     }
 
     /**

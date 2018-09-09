@@ -15,9 +15,9 @@ spring:
       server:
         git:
           # 远程仓库地址
-          uri: https://gitee.com/hejinyo/SpringCloud-Config.git
+          uri: https://gitee.com/hejinyo/calm-config.git
           # 相对搜索位置，可配置多个
-          search-paths: config-repo
+          search-paths: '{application}'
   rabbitmq:
     host: hejinyo.cn
     port: 5672

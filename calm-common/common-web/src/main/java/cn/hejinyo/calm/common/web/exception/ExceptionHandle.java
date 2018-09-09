@@ -73,9 +73,9 @@ public class ExceptionHandle {
         } else if (ex instanceof HttpMediaTypeNotSupportedException) {
             return Result.error(HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase());
         } else {
-            ex.printStackTrace();
+            // ex.printStackTrace();
         }
-        log.error("系统发生未知错误异常", ex);
+        log.error("系统发生未知错误异常", ex.getMessage());
         return Result.error("未知错误:" + ex.getMessage());
     }
 }
