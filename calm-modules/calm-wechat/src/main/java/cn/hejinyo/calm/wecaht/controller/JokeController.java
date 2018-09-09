@@ -38,7 +38,7 @@ public class JokeController {
         return Result.error();
     }
 
-    @GetMapping(value = "/{id}")
+    @PostMapping(value = "/{id}")
     public JokeEntity update(@PathVariable Integer id, @RequestBody JokeEntity jokeEntity) {
         jokeEntity.setId(id);
         return jokeRepository.save(jokeEntity);

@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @date : 2017/8/16 22:14
  */
 @RestController
-@RequestMapping("/sys/log")
+@RequestMapping("/log")
 public class SysLogController {
 
     @Autowired

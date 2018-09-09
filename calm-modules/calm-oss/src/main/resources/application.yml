@@ -3,7 +3,7 @@ spring:
     name: calm-oss
 
 server:
-  port: 8210
+  port: 8230
   servlet:
     path: /
 

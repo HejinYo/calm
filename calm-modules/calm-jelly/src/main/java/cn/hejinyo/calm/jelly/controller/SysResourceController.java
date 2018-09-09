@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 @Api(tags = "资源管理", description = "SysResourceController")
 @RestController
-@RequestMapping("/sys/resource")
+@RequestMapping("/resource")
 public class SysResourceController {
 
     @Autowired

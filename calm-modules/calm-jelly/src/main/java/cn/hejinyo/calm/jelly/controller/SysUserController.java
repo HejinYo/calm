@@ -27,7 +27,7 @@ import java.util.HashMap;
  */
 @Api(tags = "用户管理", description = "SysUserController")
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/user")
 public class SysUserController {
 
     @Autowired

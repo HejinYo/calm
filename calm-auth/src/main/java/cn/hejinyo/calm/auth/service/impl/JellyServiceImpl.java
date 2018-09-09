@@ -180,11 +180,11 @@ public class JellyServiceImpl implements JellyService {
         if (StringUtils.isEmpty(localCode)) {
             throw new InfoException("验证码过期，请重新获取");
         }
-        // 删除验证码
-        redisUtils.delete(RedisKeys.smsSingle(phone));
         if (!code.equals(localCode)) {
             throw new InfoException("验证码错误");
         }
+        // 删除验证码
+        redisUtils.delete(RedisKeys.smsSingle(phone));
         // 根据号码查询用户
         SysUserDTO userDTO = jellyApiService.findByPhone(phone);
         // 如果无相关用户或已删除则返回null

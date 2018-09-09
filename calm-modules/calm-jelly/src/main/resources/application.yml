@@ -17,7 +17,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     # jdbc_config   datasource
-    url: jdbc:mysql://127.0.0.1:3306/jelly?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/calm?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: redhat
     # Hikari will use the above plus the following to setup connection pooling
@@ -56,6 +56,14 @@ mybatis:
   mapper-locations: classpath*:cn/hejinyo/calm/jelly/dao/*Dao.xml
   configuration:
     map-underscore-to-camel-case: true
+
+
+pagehelper:
+  helperDialect: mysql
+  page-size-zero: true
+  reasonable: true
+  params: pageNum=start;pageSize=limit;pageSizeZero=zero;reasonable=heli;count=contsql
+  row-bounds-with-count: true
 
 eureka:
   client:

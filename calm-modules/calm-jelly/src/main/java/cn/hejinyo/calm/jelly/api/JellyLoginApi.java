@@ -54,7 +54,7 @@ public class JellyLoginApi {
     /**
      * 根据号码查询用户
      */
-    @GetMapping(value = Constant.SERVER_API + "/login/findByPhone/{phone}")
+    @GetMapping(value = "/findByPhone/{phone}")
     public SysUserDTO findByPhone(@PathVariable("phone") String phone) {
         return PojoConvertUtil.convert(jellyLoginService.findByPhone(phone), SysUserDTO.class);
     }

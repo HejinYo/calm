@@ -3,6 +3,7 @@ package cn.hejinyo.calm.common.basis.utils;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.io.IOException;
  * @author : heshuangshuang
  * @date : 2018/7/28 15:41
  */
+@Slf4j
 public class SmsUtils {
     /**
      * 短信应用SDK AppID 1400开头
@@ -37,11 +39,13 @@ public class SmsUtils {
             if (result.result == 0) {
                 return true;
             }
+            log.error("短信发送失败:{}", result.errMsg);
             //throw new InfoException("短信发送失败：" + result.errMsg);
         } catch (HTTPException | JSONException | IOException e) {
             // HTTP响应码错误
             e.printStackTrace();
             //throw new InfoException("短信发送异常：" + e.getMessage());
+            log.error("短信发送异常:{}", e.getMessage());
         }
         return false;
     }

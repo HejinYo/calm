@@ -1,6 +1,15 @@
 spring:
   application:
-    name: calm-consumer
+    name: calm-mail
+  thymeleaf:
+    mode: LEGACYHTML5
+  resources: # 指定静态资源的路径
+      static-locations: classpath:/static/,classpath:/templates/
+  mail:
+    host: smtp.hejinyo.cn
+    username: jelly@hejinyo.cn
+    password: Redhat@2018
+    default-encoding: utf-8
 
 server:
   port: 8220
@@ -29,5 +38,5 @@ feign:
 
 info:
   app:
-    name: calm-consumer
+    name: calm-mail
     version: 1.0

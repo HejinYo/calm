@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 @Api(tags = "权限管理", description = "SysPermissionController")
 @RestController
-@RequestMapping("/sys/permission")
+@RequestMapping("/permission")
 public class SysPermissionController {
 
     @Autowired
